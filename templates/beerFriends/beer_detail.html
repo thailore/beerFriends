@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="jumbotron" style="background-color: transparent">
+    <div style="display: flex; margin: auto; width: 90%;">
+        <div style="width: 200px; height: 200px">
+            <img class="media-object" src="{{beer.image.url}}"
+                 style="max-width: 200px; max-height: 200px; margin: auto">
+        </div>
+        <h1>{{beer.name}}</h1>
+    </div>
+</div>
+
+<div class="progress" style="width: 80%; margin: auto">
+    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{avgRatingPercentage}}"
+         aria-valuemin="0" aria-valuemax="100" style="width:{{ avgRatingPercentage }}%">
+        Average Rating: {{avgRating|floatformat:1}}
+    </div>
+</div>
+
+
+<div style="width: 90%; margin: auto">
+    <br/>
+    <h4>Added on: {{beer.addedOn}}</h4>
+
+    <ul class="list-group">
+        {% if reviews %}
+        {% for review in reviews %}
+
+        <li class="list-group-item">
+            <span class="badge">{{review.rating}}</span>
+            {{review.text}} -- <a href="{% url 'user' review.creator %}">{{review.creator}}</a>
+            {% if review.creator  == user.username %}
+            <a href="{% url 'editReview' review.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
+            {% endif %}
+        </li>
+        {% endfor %}
+        {% else %}
+        <p>Not yet rated</p>
+        {% endif %}
+    </ul>
+
+    <button>
+        <a href="{% url 'rate' beer.id %}">
+            Rate Beer
+        </a>
+    </button>
+
+    <button>
+        <a href="{% url 'edit' beer.id %}">
+            Edit Beer
+        </a>
+    </button>
+</div>
+{% endblock %}

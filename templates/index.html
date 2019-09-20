@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div>
+    {% if beer_ranking_list %}
+
+    {% for beer in beer_ranking_list %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ beer.name }}</h3>
+        </div>
+        <div class="panel-body">
+            <a href="{% url 'beer-detail' beer.id %}">
+                <div class="media">
+                    <div class="media-left">
+                        <div style="width: 200px; height: 200px">
+                            {% if beer.image %}
+                            <img class="media-object" src="{{beer.image.url}}"
+                                 style="max-width: 200px; max-height: 200px; margin: auto">
+                            {% else %}
+                            <img class="media-object" src="/media/images/default.jpg" style="width: 200px">
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <p class="media-heading">{{beer.addedOn}}</p>
+
+                        <p class="media-heading">Country of origin: {{beer.origin}}</p>
+                        <p class="media-heading">Alcohol content: {{beer.alcoholContent}}%</p>
+                    </div>
+                    <div class="media-right">
+                        <h3 class="media-heading">{{beer.rating|floatformat}}</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if newly_rated_beer %}
+
+    <br/>
+
+    <div>
+        <h3 style="text-align: center">Newly Rated Beer... Rate more than 3 times to get on the leaderboard!</h3>
+    </div>
+    {% for beer in newly_rated_beer %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ beer.name }}</h3>
+        </div>
+        <div class="panel-body" style="background-color: #ffc0cb63  ">
+            <a href="{% url 'beer-detail' beer.id %}">
+                <div class="media">
+                    <div class="media-left">
+                        <div style="width: 200px; height: 200px">
+                            {% if beer.image %}
+                            <img class="media-object" src="{{beer.image.url}}"
+                                 style="max-width: 200px; max-height: 200px; margin: auto">
+                            {% else %}
+                            <img class="media-object" src="/media/images/default.jpg" style="width: 200px">
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <p class="media-heading">{{beer.addedOn}}</p>
+
+                        <p class="media-heading">Country of origin: {{beer.origin}}</p>
+                        <p class="media-heading">Alcohol content: {{beer.alcoholContent}}%</p>
+                    </div>
+                    <div class="media-right">
+                        <h3 class="media-heading">{{beer.rating|floatformat}}</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="btn-group btn-group-justified" role="group" style="margin-bottom: 50px">
+        <div class="btn-group" role="group">
+            <a href="/add">
+                <button type="button" class="btn btn-primary btn-default btn-lg">Add more Beer</button>
+            </a>
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}

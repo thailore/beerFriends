@@ -1,0 +1,20 @@
+{% load staticfiles %}
+
+{% block content %}
+  <div class="container">
+
+<h2>All Beers</h2>
+
+<ul>
+
+{% for beer in beers %}
+    <li>{{ beer.name }}</li>
+    <li>Country of Origin: {{ beer.origin }}</li>
+    <li>Rating: {{ beer.rating }}</li>
+{% endfor %}
+
+</ul>
+
+</div>
+
+{% endblock %}

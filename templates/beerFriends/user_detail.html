@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div style="margin: 10px;">
+
+    <h2>
+        User -- {{viewedUser}}
+    </h2>
+
+    <ul class="list-group">
+        {% for review in user_reviews %}
+        <li class="list-group-item">
+            <span class="badge">{{review.rating}}</span>
+            <a href="{% url 'beer-detail' review.beer.id %}">{{review.beer.name}} </a> -- {{review.text}}
+            {% if review.creator == user.username %}
+            <a href="{% url 'editReview' review.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
